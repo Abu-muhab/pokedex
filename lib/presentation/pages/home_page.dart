@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
         final currentState = context.read<PokemonCubit>().state;
-        if (currentState is Loaded) {
+        if (currentState is PokemonLoadedState) {
           context
               .read<PokemonCubit>()
               .loadPokemons(loadedPokemons: currentState.pokemons);
@@ -100,16 +100,18 @@ class _HomePageState extends State<HomePage> {
                     child: BlocConsumer<PokemonCubit, PokemonState>(
                       listener: (context, state) {},
                       builder: (context, state) {
-                        if (state is Loading || state is Initial) {
+                        if (state is PokemonLoadingState ||
+                            state is PokemonInitialState) {
                           return const Center(
                             child: CircularProgressIndicator(),
                           );
-                        } else if (state is Loaded || state is LoadingMore) {
+                        } else if (state is PokemonLoadedState ||
+                            state is PokemonLoadingMoreState) {
                           return Column(children: [
                             Expanded(
                                 child: buildLoadedPokemons(
                                     (state as dynamic).pokemons)),
-                            if (state is LoadingMore)
+                            if (state is PokemonLoadingMoreState)
                               const Center(
                                 child: Padding(
                                   padding: EdgeInsets.all(10),

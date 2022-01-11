@@ -21,7 +21,8 @@ class Pokemon with _$Pokemon {
   factory Pokemon.fromJson(Map<String, dynamic> json) =>
       _$PokemonFromJson(json).copyWith(
           imageUrl: json['sprites']?['other']?['official-artwork']
-              ?['front_default']);
+                  ?['front_default'] ??
+              json['imageUrl']);
 
   double averagePower() {
     double total = 0;
@@ -37,7 +38,7 @@ class Pokemon with _$Pokemon {
   }
 
   double getBMI() {
-    return (height ?? 0) / (pow(weight ?? 0, 2));
+    return (weight ?? 0) / (pow(height ?? 0, 2));
   }
 }
 
@@ -46,7 +47,7 @@ class PokemonType with _$PokemonType {
   factory PokemonType({String? name, String? url}) = _PokemonType;
 
   factory PokemonType.fromJson(Map<String, dynamic> json) =>
-      _$PokemonTypeFromJson(json['type']);
+      _$PokemonTypeFromJson(json['type'] ?? json);
 }
 
 @freezed
@@ -58,6 +59,6 @@ class Stat with _$Stat {
 
   factory Stat.fromJson(Map<String, dynamic> json) =>
       _$StatFromJson(json).copyWith(
-        name: json['stat']['name'],
+        name: json['stat']['name'] ?? json['name'],
       );
 }

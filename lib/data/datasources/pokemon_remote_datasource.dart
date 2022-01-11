@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:pokedex/data/network/pokemon_rest_client.dart';
 import 'package:pokedex/domain/entities/pokemon.dart';
 import 'package:pokedex/domain/repositories/pokemon_repository.dart';
@@ -23,5 +21,30 @@ class PokemonRemoteDataSourceImpl implements PokemonRemoteDataSource {
         .map((e) => _pokemonRestClient.getPokemon(e.name))
         .toList();
     return await Future.wait(pokemonsFutures);
+  }
+
+  @override
+  Future<void> addFavoritePokemon(Pokemon pokemon) {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<GetFavoritePokemonResponse> getFavoritePokemons() {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> removeFavoritePokemon(Pokemon pokemon) {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> updateFavoritePokemon(Pokemon pokemon) {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> isFavoritePokemon(Pokemon pokemon) {
+    throw UnimplementedError();
   }
 }

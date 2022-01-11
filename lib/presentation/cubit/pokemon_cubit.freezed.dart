@@ -17,28 +17,28 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$PokemonStateTearOff {
   const _$PokemonStateTearOff();
 
-  Initial initial() {
-    return const Initial();
+  PokemonInitialState initial() {
+    return const PokemonInitialState();
   }
 
-  Loading loading() {
-    return const Loading();
+  PokemonLoadingState loading() {
+    return const PokemonLoadingState();
   }
 
-  LoadingMore loadingMore(List<Pokemon> pokemons) {
-    return LoadingMore(
+  PokemonLoadingMoreState loadingMore(List<Pokemon> pokemons) {
+    return PokemonLoadingMoreState(
       pokemons,
     );
   }
 
-  Loaded loaded(List<Pokemon> pokemons) {
-    return Loaded(
+  PokemonLoadedState loaded(List<Pokemon> pokemons) {
+    return PokemonLoadedState(
       pokemons,
     );
   }
 
-  Error error(String message) {
-    return Error(
+  PokemonErrorState error(String message) {
+    return PokemonErrorState(
       message,
     );
   }
@@ -79,29 +79,29 @@ mixin _$PokemonState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Initial value) initial,
-    required TResult Function(Loading value) loading,
-    required TResult Function(LoadingMore value) loadingMore,
-    required TResult Function(Loaded value) loaded,
-    required TResult Function(Error value) error,
+    required TResult Function(PokemonInitialState value) initial,
+    required TResult Function(PokemonLoadingState value) loading,
+    required TResult Function(PokemonLoadingMoreState value) loadingMore,
+    required TResult Function(PokemonLoadedState value) loaded,
+    required TResult Function(PokemonErrorState value) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Initial value)? initial,
-    TResult Function(Loading value)? loading,
-    TResult Function(LoadingMore value)? loadingMore,
-    TResult Function(Loaded value)? loaded,
-    TResult Function(Error value)? error,
+    TResult Function(PokemonInitialState value)? initial,
+    TResult Function(PokemonLoadingState value)? loading,
+    TResult Function(PokemonLoadingMoreState value)? loadingMore,
+    TResult Function(PokemonLoadedState value)? loaded,
+    TResult Function(PokemonErrorState value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Initial value)? initial,
-    TResult Function(Loading value)? loading,
-    TResult Function(LoadingMore value)? loadingMore,
-    TResult Function(Loaded value)? loaded,
-    TResult Function(Error value)? error,
+    TResult Function(PokemonInitialState value)? initial,
+    TResult Function(PokemonLoadingState value)? loading,
+    TResult Function(PokemonLoadingMoreState value)? loadingMore,
+    TResult Function(PokemonLoadedState value)? loaded,
+    TResult Function(PokemonErrorState value)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -124,25 +124,28 @@ class _$PokemonStateCopyWithImpl<$Res> implements $PokemonStateCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class $InitialCopyWith<$Res> {
-  factory $InitialCopyWith(Initial value, $Res Function(Initial) then) =
-      _$InitialCopyWithImpl<$Res>;
+abstract class $PokemonInitialStateCopyWith<$Res> {
+  factory $PokemonInitialStateCopyWith(
+          PokemonInitialState value, $Res Function(PokemonInitialState) then) =
+      _$PokemonInitialStateCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$InitialCopyWithImpl<$Res> extends _$PokemonStateCopyWithImpl<$Res>
-    implements $InitialCopyWith<$Res> {
-  _$InitialCopyWithImpl(Initial _value, $Res Function(Initial) _then)
-      : super(_value, (v) => _then(v as Initial));
+class _$PokemonInitialStateCopyWithImpl<$Res>
+    extends _$PokemonStateCopyWithImpl<$Res>
+    implements $PokemonInitialStateCopyWith<$Res> {
+  _$PokemonInitialStateCopyWithImpl(
+      PokemonInitialState _value, $Res Function(PokemonInitialState) _then)
+      : super(_value, (v) => _then(v as PokemonInitialState));
 
   @override
-  Initial get _value => super._value as Initial;
+  PokemonInitialState get _value => super._value as PokemonInitialState;
 }
 
 /// @nodoc
 
-class _$Initial implements Initial {
-  const _$Initial();
+class _$PokemonInitialState implements PokemonInitialState {
+  const _$PokemonInitialState();
 
   @override
   String toString() {
@@ -152,7 +155,7 @@ class _$Initial implements Initial {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is Initial);
+        (other.runtimeType == runtimeType && other is PokemonInitialState);
   }
 
   @override
@@ -201,11 +204,11 @@ class _$Initial implements Initial {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Initial value) initial,
-    required TResult Function(Loading value) loading,
-    required TResult Function(LoadingMore value) loadingMore,
-    required TResult Function(Loaded value) loaded,
-    required TResult Function(Error value) error,
+    required TResult Function(PokemonInitialState value) initial,
+    required TResult Function(PokemonLoadingState value) loading,
+    required TResult Function(PokemonLoadingMoreState value) loadingMore,
+    required TResult Function(PokemonLoadedState value) loaded,
+    required TResult Function(PokemonErrorState value) error,
   }) {
     return initial(this);
   }
@@ -213,11 +216,11 @@ class _$Initial implements Initial {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Initial value)? initial,
-    TResult Function(Loading value)? loading,
-    TResult Function(LoadingMore value)? loadingMore,
-    TResult Function(Loaded value)? loaded,
-    TResult Function(Error value)? error,
+    TResult Function(PokemonInitialState value)? initial,
+    TResult Function(PokemonLoadingState value)? loading,
+    TResult Function(PokemonLoadingMoreState value)? loadingMore,
+    TResult Function(PokemonLoadedState value)? loaded,
+    TResult Function(PokemonErrorState value)? error,
   }) {
     return initial?.call(this);
   }
@@ -225,11 +228,11 @@ class _$Initial implements Initial {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Initial value)? initial,
-    TResult Function(Loading value)? loading,
-    TResult Function(LoadingMore value)? loadingMore,
-    TResult Function(Loaded value)? loaded,
-    TResult Function(Error value)? error,
+    TResult Function(PokemonInitialState value)? initial,
+    TResult Function(PokemonLoadingState value)? loading,
+    TResult Function(PokemonLoadingMoreState value)? loadingMore,
+    TResult Function(PokemonLoadedState value)? loaded,
+    TResult Function(PokemonErrorState value)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -239,30 +242,33 @@ class _$Initial implements Initial {
   }
 }
 
-abstract class Initial implements PokemonState {
-  const factory Initial() = _$Initial;
+abstract class PokemonInitialState implements PokemonState {
+  const factory PokemonInitialState() = _$PokemonInitialState;
 }
 
 /// @nodoc
-abstract class $LoadingCopyWith<$Res> {
-  factory $LoadingCopyWith(Loading value, $Res Function(Loading) then) =
-      _$LoadingCopyWithImpl<$Res>;
+abstract class $PokemonLoadingStateCopyWith<$Res> {
+  factory $PokemonLoadingStateCopyWith(
+          PokemonLoadingState value, $Res Function(PokemonLoadingState) then) =
+      _$PokemonLoadingStateCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$LoadingCopyWithImpl<$Res> extends _$PokemonStateCopyWithImpl<$Res>
-    implements $LoadingCopyWith<$Res> {
-  _$LoadingCopyWithImpl(Loading _value, $Res Function(Loading) _then)
-      : super(_value, (v) => _then(v as Loading));
+class _$PokemonLoadingStateCopyWithImpl<$Res>
+    extends _$PokemonStateCopyWithImpl<$Res>
+    implements $PokemonLoadingStateCopyWith<$Res> {
+  _$PokemonLoadingStateCopyWithImpl(
+      PokemonLoadingState _value, $Res Function(PokemonLoadingState) _then)
+      : super(_value, (v) => _then(v as PokemonLoadingState));
 
   @override
-  Loading get _value => super._value as Loading;
+  PokemonLoadingState get _value => super._value as PokemonLoadingState;
 }
 
 /// @nodoc
 
-class _$Loading implements Loading {
-  const _$Loading();
+class _$PokemonLoadingState implements PokemonLoadingState {
+  const _$PokemonLoadingState();
 
   @override
   String toString() {
@@ -272,7 +278,7 @@ class _$Loading implements Loading {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is Loading);
+        (other.runtimeType == runtimeType && other is PokemonLoadingState);
   }
 
   @override
@@ -321,11 +327,11 @@ class _$Loading implements Loading {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Initial value) initial,
-    required TResult Function(Loading value) loading,
-    required TResult Function(LoadingMore value) loadingMore,
-    required TResult Function(Loaded value) loaded,
-    required TResult Function(Error value) error,
+    required TResult Function(PokemonInitialState value) initial,
+    required TResult Function(PokemonLoadingState value) loading,
+    required TResult Function(PokemonLoadingMoreState value) loadingMore,
+    required TResult Function(PokemonLoadedState value) loaded,
+    required TResult Function(PokemonErrorState value) error,
   }) {
     return loading(this);
   }
@@ -333,11 +339,11 @@ class _$Loading implements Loading {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Initial value)? initial,
-    TResult Function(Loading value)? loading,
-    TResult Function(LoadingMore value)? loadingMore,
-    TResult Function(Loaded value)? loaded,
-    TResult Function(Error value)? error,
+    TResult Function(PokemonInitialState value)? initial,
+    TResult Function(PokemonLoadingState value)? loading,
+    TResult Function(PokemonLoadingMoreState value)? loadingMore,
+    TResult Function(PokemonLoadedState value)? loaded,
+    TResult Function(PokemonErrorState value)? error,
   }) {
     return loading?.call(this);
   }
@@ -345,11 +351,11 @@ class _$Loading implements Loading {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Initial value)? initial,
-    TResult Function(Loading value)? loading,
-    TResult Function(LoadingMore value)? loadingMore,
-    TResult Function(Loaded value)? loaded,
-    TResult Function(Error value)? error,
+    TResult Function(PokemonInitialState value)? initial,
+    TResult Function(PokemonLoadingState value)? loading,
+    TResult Function(PokemonLoadingMoreState value)? loadingMore,
+    TResult Function(PokemonLoadedState value)? loaded,
+    TResult Function(PokemonErrorState value)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -359,33 +365,34 @@ class _$Loading implements Loading {
   }
 }
 
-abstract class Loading implements PokemonState {
-  const factory Loading() = _$Loading;
+abstract class PokemonLoadingState implements PokemonState {
+  const factory PokemonLoadingState() = _$PokemonLoadingState;
 }
 
 /// @nodoc
-abstract class $LoadingMoreCopyWith<$Res> {
-  factory $LoadingMoreCopyWith(
-          LoadingMore value, $Res Function(LoadingMore) then) =
-      _$LoadingMoreCopyWithImpl<$Res>;
+abstract class $PokemonLoadingMoreStateCopyWith<$Res> {
+  factory $PokemonLoadingMoreStateCopyWith(PokemonLoadingMoreState value,
+          $Res Function(PokemonLoadingMoreState) then) =
+      _$PokemonLoadingMoreStateCopyWithImpl<$Res>;
   $Res call({List<Pokemon> pokemons});
 }
 
 /// @nodoc
-class _$LoadingMoreCopyWithImpl<$Res> extends _$PokemonStateCopyWithImpl<$Res>
-    implements $LoadingMoreCopyWith<$Res> {
-  _$LoadingMoreCopyWithImpl(
-      LoadingMore _value, $Res Function(LoadingMore) _then)
-      : super(_value, (v) => _then(v as LoadingMore));
+class _$PokemonLoadingMoreStateCopyWithImpl<$Res>
+    extends _$PokemonStateCopyWithImpl<$Res>
+    implements $PokemonLoadingMoreStateCopyWith<$Res> {
+  _$PokemonLoadingMoreStateCopyWithImpl(PokemonLoadingMoreState _value,
+      $Res Function(PokemonLoadingMoreState) _then)
+      : super(_value, (v) => _then(v as PokemonLoadingMoreState));
 
   @override
-  LoadingMore get _value => super._value as LoadingMore;
+  PokemonLoadingMoreState get _value => super._value as PokemonLoadingMoreState;
 
   @override
   $Res call({
     Object? pokemons = freezed,
   }) {
-    return _then(LoadingMore(
+    return _then(PokemonLoadingMoreState(
       pokemons == freezed
           ? _value.pokemons
           : pokemons // ignore: cast_nullable_to_non_nullable
@@ -396,8 +403,8 @@ class _$LoadingMoreCopyWithImpl<$Res> extends _$PokemonStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$LoadingMore implements LoadingMore {
-  const _$LoadingMore(this.pokemons);
+class _$PokemonLoadingMoreState implements PokemonLoadingMoreState {
+  const _$PokemonLoadingMoreState(this.pokemons);
 
   @override
   final List<Pokemon> pokemons;
@@ -411,7 +418,7 @@ class _$LoadingMore implements LoadingMore {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is LoadingMore &&
+            other is PokemonLoadingMoreState &&
             const DeepCollectionEquality().equals(other.pokemons, pokemons));
   }
 
@@ -421,8 +428,9 @@ class _$LoadingMore implements LoadingMore {
 
   @JsonKey(ignore: true)
   @override
-  $LoadingMoreCopyWith<LoadingMore> get copyWith =>
-      _$LoadingMoreCopyWithImpl<LoadingMore>(this, _$identity);
+  $PokemonLoadingMoreStateCopyWith<PokemonLoadingMoreState> get copyWith =>
+      _$PokemonLoadingMoreStateCopyWithImpl<PokemonLoadingMoreState>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -467,11 +475,11 @@ class _$LoadingMore implements LoadingMore {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Initial value) initial,
-    required TResult Function(Loading value) loading,
-    required TResult Function(LoadingMore value) loadingMore,
-    required TResult Function(Loaded value) loaded,
-    required TResult Function(Error value) error,
+    required TResult Function(PokemonInitialState value) initial,
+    required TResult Function(PokemonLoadingState value) loading,
+    required TResult Function(PokemonLoadingMoreState value) loadingMore,
+    required TResult Function(PokemonLoadedState value) loaded,
+    required TResult Function(PokemonErrorState value) error,
   }) {
     return loadingMore(this);
   }
@@ -479,11 +487,11 @@ class _$LoadingMore implements LoadingMore {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Initial value)? initial,
-    TResult Function(Loading value)? loading,
-    TResult Function(LoadingMore value)? loadingMore,
-    TResult Function(Loaded value)? loaded,
-    TResult Function(Error value)? error,
+    TResult Function(PokemonInitialState value)? initial,
+    TResult Function(PokemonLoadingState value)? loading,
+    TResult Function(PokemonLoadingMoreState value)? loadingMore,
+    TResult Function(PokemonLoadedState value)? loaded,
+    TResult Function(PokemonErrorState value)? error,
   }) {
     return loadingMore?.call(this);
   }
@@ -491,11 +499,11 @@ class _$LoadingMore implements LoadingMore {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Initial value)? initial,
-    TResult Function(Loading value)? loading,
-    TResult Function(LoadingMore value)? loadingMore,
-    TResult Function(Loaded value)? loaded,
-    TResult Function(Error value)? error,
+    TResult Function(PokemonInitialState value)? initial,
+    TResult Function(PokemonLoadingState value)? loading,
+    TResult Function(PokemonLoadingMoreState value)? loadingMore,
+    TResult Function(PokemonLoadedState value)? loaded,
+    TResult Function(PokemonErrorState value)? error,
     required TResult orElse(),
   }) {
     if (loadingMore != null) {
@@ -505,36 +513,40 @@ class _$LoadingMore implements LoadingMore {
   }
 }
 
-abstract class LoadingMore implements PokemonState {
-  const factory LoadingMore(List<Pokemon> pokemons) = _$LoadingMore;
+abstract class PokemonLoadingMoreState implements PokemonState {
+  const factory PokemonLoadingMoreState(List<Pokemon> pokemons) =
+      _$PokemonLoadingMoreState;
 
   List<Pokemon> get pokemons;
   @JsonKey(ignore: true)
-  $LoadingMoreCopyWith<LoadingMore> get copyWith =>
+  $PokemonLoadingMoreStateCopyWith<PokemonLoadingMoreState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $LoadedCopyWith<$Res> {
-  factory $LoadedCopyWith(Loaded value, $Res Function(Loaded) then) =
-      _$LoadedCopyWithImpl<$Res>;
+abstract class $PokemonLoadedStateCopyWith<$Res> {
+  factory $PokemonLoadedStateCopyWith(
+          PokemonLoadedState value, $Res Function(PokemonLoadedState) then) =
+      _$PokemonLoadedStateCopyWithImpl<$Res>;
   $Res call({List<Pokemon> pokemons});
 }
 
 /// @nodoc
-class _$LoadedCopyWithImpl<$Res> extends _$PokemonStateCopyWithImpl<$Res>
-    implements $LoadedCopyWith<$Res> {
-  _$LoadedCopyWithImpl(Loaded _value, $Res Function(Loaded) _then)
-      : super(_value, (v) => _then(v as Loaded));
+class _$PokemonLoadedStateCopyWithImpl<$Res>
+    extends _$PokemonStateCopyWithImpl<$Res>
+    implements $PokemonLoadedStateCopyWith<$Res> {
+  _$PokemonLoadedStateCopyWithImpl(
+      PokemonLoadedState _value, $Res Function(PokemonLoadedState) _then)
+      : super(_value, (v) => _then(v as PokemonLoadedState));
 
   @override
-  Loaded get _value => super._value as Loaded;
+  PokemonLoadedState get _value => super._value as PokemonLoadedState;
 
   @override
   $Res call({
     Object? pokemons = freezed,
   }) {
-    return _then(Loaded(
+    return _then(PokemonLoadedState(
       pokemons == freezed
           ? _value.pokemons
           : pokemons // ignore: cast_nullable_to_non_nullable
@@ -545,8 +557,8 @@ class _$LoadedCopyWithImpl<$Res> extends _$PokemonStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$Loaded implements Loaded {
-  const _$Loaded(this.pokemons);
+class _$PokemonLoadedState implements PokemonLoadedState {
+  const _$PokemonLoadedState(this.pokemons);
 
   @override
   final List<Pokemon> pokemons;
@@ -560,7 +572,7 @@ class _$Loaded implements Loaded {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is Loaded &&
+            other is PokemonLoadedState &&
             const DeepCollectionEquality().equals(other.pokemons, pokemons));
   }
 
@@ -570,8 +582,8 @@ class _$Loaded implements Loaded {
 
   @JsonKey(ignore: true)
   @override
-  $LoadedCopyWith<Loaded> get copyWith =>
-      _$LoadedCopyWithImpl<Loaded>(this, _$identity);
+  $PokemonLoadedStateCopyWith<PokemonLoadedState> get copyWith =>
+      _$PokemonLoadedStateCopyWithImpl<PokemonLoadedState>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -616,11 +628,11 @@ class _$Loaded implements Loaded {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Initial value) initial,
-    required TResult Function(Loading value) loading,
-    required TResult Function(LoadingMore value) loadingMore,
-    required TResult Function(Loaded value) loaded,
-    required TResult Function(Error value) error,
+    required TResult Function(PokemonInitialState value) initial,
+    required TResult Function(PokemonLoadingState value) loading,
+    required TResult Function(PokemonLoadingMoreState value) loadingMore,
+    required TResult Function(PokemonLoadedState value) loaded,
+    required TResult Function(PokemonErrorState value) error,
   }) {
     return loaded(this);
   }
@@ -628,11 +640,11 @@ class _$Loaded implements Loaded {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Initial value)? initial,
-    TResult Function(Loading value)? loading,
-    TResult Function(LoadingMore value)? loadingMore,
-    TResult Function(Loaded value)? loaded,
-    TResult Function(Error value)? error,
+    TResult Function(PokemonInitialState value)? initial,
+    TResult Function(PokemonLoadingState value)? loading,
+    TResult Function(PokemonLoadingMoreState value)? loadingMore,
+    TResult Function(PokemonLoadedState value)? loaded,
+    TResult Function(PokemonErrorState value)? error,
   }) {
     return loaded?.call(this);
   }
@@ -640,11 +652,11 @@ class _$Loaded implements Loaded {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Initial value)? initial,
-    TResult Function(Loading value)? loading,
-    TResult Function(LoadingMore value)? loadingMore,
-    TResult Function(Loaded value)? loaded,
-    TResult Function(Error value)? error,
+    TResult Function(PokemonInitialState value)? initial,
+    TResult Function(PokemonLoadingState value)? loading,
+    TResult Function(PokemonLoadingMoreState value)? loadingMore,
+    TResult Function(PokemonLoadedState value)? loaded,
+    TResult Function(PokemonErrorState value)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -654,35 +666,40 @@ class _$Loaded implements Loaded {
   }
 }
 
-abstract class Loaded implements PokemonState {
-  const factory Loaded(List<Pokemon> pokemons) = _$Loaded;
+abstract class PokemonLoadedState implements PokemonState {
+  const factory PokemonLoadedState(List<Pokemon> pokemons) =
+      _$PokemonLoadedState;
 
   List<Pokemon> get pokemons;
   @JsonKey(ignore: true)
-  $LoadedCopyWith<Loaded> get copyWith => throw _privateConstructorUsedError;
+  $PokemonLoadedStateCopyWith<PokemonLoadedState> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ErrorCopyWith<$Res> {
-  factory $ErrorCopyWith(Error value, $Res Function(Error) then) =
-      _$ErrorCopyWithImpl<$Res>;
+abstract class $PokemonErrorStateCopyWith<$Res> {
+  factory $PokemonErrorStateCopyWith(
+          PokemonErrorState value, $Res Function(PokemonErrorState) then) =
+      _$PokemonErrorStateCopyWithImpl<$Res>;
   $Res call({String message});
 }
 
 /// @nodoc
-class _$ErrorCopyWithImpl<$Res> extends _$PokemonStateCopyWithImpl<$Res>
-    implements $ErrorCopyWith<$Res> {
-  _$ErrorCopyWithImpl(Error _value, $Res Function(Error) _then)
-      : super(_value, (v) => _then(v as Error));
+class _$PokemonErrorStateCopyWithImpl<$Res>
+    extends _$PokemonStateCopyWithImpl<$Res>
+    implements $PokemonErrorStateCopyWith<$Res> {
+  _$PokemonErrorStateCopyWithImpl(
+      PokemonErrorState _value, $Res Function(PokemonErrorState) _then)
+      : super(_value, (v) => _then(v as PokemonErrorState));
 
   @override
-  Error get _value => super._value as Error;
+  PokemonErrorState get _value => super._value as PokemonErrorState;
 
   @override
   $Res call({
     Object? message = freezed,
   }) {
-    return _then(Error(
+    return _then(PokemonErrorState(
       message == freezed
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -693,8 +710,8 @@ class _$ErrorCopyWithImpl<$Res> extends _$PokemonStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$Error implements Error {
-  const _$Error(this.message);
+class _$PokemonErrorState implements PokemonErrorState {
+  const _$PokemonErrorState(this.message);
 
   @override
   final String message;
@@ -708,7 +725,7 @@ class _$Error implements Error {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is Error &&
+            other is PokemonErrorState &&
             const DeepCollectionEquality().equals(other.message, message));
   }
 
@@ -718,8 +735,8 @@ class _$Error implements Error {
 
   @JsonKey(ignore: true)
   @override
-  $ErrorCopyWith<Error> get copyWith =>
-      _$ErrorCopyWithImpl<Error>(this, _$identity);
+  $PokemonErrorStateCopyWith<PokemonErrorState> get copyWith =>
+      _$PokemonErrorStateCopyWithImpl<PokemonErrorState>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -764,11 +781,11 @@ class _$Error implements Error {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Initial value) initial,
-    required TResult Function(Loading value) loading,
-    required TResult Function(LoadingMore value) loadingMore,
-    required TResult Function(Loaded value) loaded,
-    required TResult Function(Error value) error,
+    required TResult Function(PokemonInitialState value) initial,
+    required TResult Function(PokemonLoadingState value) loading,
+    required TResult Function(PokemonLoadingMoreState value) loadingMore,
+    required TResult Function(PokemonLoadedState value) loaded,
+    required TResult Function(PokemonErrorState value) error,
   }) {
     return error(this);
   }
@@ -776,11 +793,11 @@ class _$Error implements Error {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Initial value)? initial,
-    TResult Function(Loading value)? loading,
-    TResult Function(LoadingMore value)? loadingMore,
-    TResult Function(Loaded value)? loaded,
-    TResult Function(Error value)? error,
+    TResult Function(PokemonInitialState value)? initial,
+    TResult Function(PokemonLoadingState value)? loading,
+    TResult Function(PokemonLoadingMoreState value)? loadingMore,
+    TResult Function(PokemonLoadedState value)? loaded,
+    TResult Function(PokemonErrorState value)? error,
   }) {
     return error?.call(this);
   }
@@ -788,11 +805,11 @@ class _$Error implements Error {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Initial value)? initial,
-    TResult Function(Loading value)? loading,
-    TResult Function(LoadingMore value)? loadingMore,
-    TResult Function(Loaded value)? loaded,
-    TResult Function(Error value)? error,
+    TResult Function(PokemonInitialState value)? initial,
+    TResult Function(PokemonLoadingState value)? loading,
+    TResult Function(PokemonLoadingMoreState value)? loadingMore,
+    TResult Function(PokemonLoadedState value)? loaded,
+    TResult Function(PokemonErrorState value)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -802,10 +819,11 @@ class _$Error implements Error {
   }
 }
 
-abstract class Error implements PokemonState {
-  const factory Error(String message) = _$Error;
+abstract class PokemonErrorState implements PokemonState {
+  const factory PokemonErrorState(String message) = _$PokemonErrorState;
 
   String get message;
   @JsonKey(ignore: true)
-  $ErrorCopyWith<Error> get copyWith => throw _privateConstructorUsedError;
+  $PokemonErrorStateCopyWith<PokemonErrorState> get copyWith =>
+      throw _privateConstructorUsedError;
 }

@@ -1,9 +1,10 @@
-import 'dart:math';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokedex/domain/entities/pokemon.dart';
+import 'package:pokedex/injection_container.dart';
 import 'package:pokedex/presentation/core/app_colors.dart';
+import 'package:pokedex/presentation/cubit/favorite_pokemon_cubit.dart';
 import 'package:pokedex/presentation/widgets/pokemon_attribute_card.dart';
 import 'package:pokedex/presentation/widgets/pokemon_stat.dart';
 
@@ -21,6 +22,8 @@ class _PokemonDetailsPageState extends State<PokemonDetailsPage> {
   Pokemon? _pokemon;
   Color? dominantColor;
   double titleOpacity = 0;
+  bool? isFavorite;
+  FavoritePokemonCubit cubit = sl<FavoritePokemonCubit>();
 
   final ScrollController _scrollController = ScrollController();
   @override
@@ -44,13 +47,93 @@ class _PokemonDetailsPageState extends State<PokemonDetailsPage> {
 
       //compute dominant color
       dominantColor = await computeDominatImageColor(_pokemon?.imageUrl ?? '');
-      setState(() {});
+
+      //check if pokemon is favorite
+      checkFavorite();
     });
+  }
+
+  Future<void> checkFavorite() async {
+    isFavorite = await cubit.isFavorite(_pokemon!);
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton:
+          BlocConsumer<FavoritePokemonCubit, FavoritePokemonState>(
+              bloc: cubit,
+              builder: (context, state) {
+                return SizedBox(
+                  height: 50,
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      if (state is FavoritePokemonLoadingState) {
+                        return;
+                      }
+
+                      try {
+                        if (isFavorite == false) {
+                          await cubit.addToFavorites(_pokemon!);
+                        } else if (isFavorite == true) {
+                          await cubit.removeFromFavorites(_pokemon!);
+                        }
+                        // ignore: empty_catches
+                      } catch (err) {}
+                    },
+                    style: ElevatedButton.styleFrom(
+                        textStyle: const TextStyle(color: Colors.white),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        primary: isFavorite == true
+                            ? AppColors.lightBlueAccent
+                            : AppColors.lightBlue),
+                    child: state is FavoritePokemonLoadingState ||
+                            isFavorite == null
+                        ? const Center(
+                            child: SizedBox(
+                            height: 25,
+                            width: 25,
+                            child: CircularProgressIndicator(),
+                          ))
+                        : Padding(
+                            child: Text(
+                              isFavorite == true
+                                  ? 'Remove from favorites'
+                                  : 'Add to favorites',
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700,
+                                  color: isFavorite == true
+                                      ? AppColors.lightBlue
+                                      : Colors.white),
+                            ),
+                            padding: const EdgeInsets.only(
+                                left: 10, right: 10, top: 15, bottom: 15),
+                          ),
+                  ),
+                );
+              },
+              listener: (context, state) async {
+                if (state is FavoritePokemonLoadedState) {
+                  await checkFavorite();
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text(isFavorite == true
+                        ? 'Added to favorites'
+                        : 'Removed from favorites'),
+                    duration: const Duration(seconds: 2),
+                  ));
+                }
+
+                if (state is FavoritePokemonErrorState) {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text(state.message),
+                    duration: const Duration(seconds: 2),
+                  ));
+                }
+              }),
       body: NestedScrollView(
         controller: _scrollController,
         headerSliverBuilder: (context, innerBoxScrolled) {
