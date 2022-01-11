@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokedex/presentation/cubit/pokemon_cubit.dart';
 import 'package:pokedex/presentation/pages/home_page.dart';
+import 'package:pokedex/presentation/pages/pokemon_details.dart';
 
 import 'injection_container.dart';
 
@@ -20,7 +21,10 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Pokedex',
-        routes: {'/': (context) => const HomePage()},
+        routes: {
+          '/': (context) => const HomePage(),
+          '/details': (context) => const PokemonDetailsPage()
+        },
         initialRoute: '/',
       ),
     );

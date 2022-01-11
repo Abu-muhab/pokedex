@@ -26,13 +26,17 @@ class _$PokemonTearOff {
       String? url,
       int? id,
       List<PokemonType>? types,
-      String? imageUrl}) {
+      String? imageUrl,
+      int? height,
+      int? weight}) {
     return _Pokemon(
       name: name,
       url: url,
       id: id,
       types: types,
       imageUrl: imageUrl,
+      height: height,
+      weight: weight,
     );
   }
 
@@ -51,6 +55,8 @@ mixin _$Pokemon {
   int? get id => throw _privateConstructorUsedError;
   List<PokemonType>? get types => throw _privateConstructorUsedError;
   String? get imageUrl => throw _privateConstructorUsedError;
+  int? get height => throw _privateConstructorUsedError;
+  int? get weight => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -66,7 +72,9 @@ abstract class $PokemonCopyWith<$Res> {
       String? url,
       int? id,
       List<PokemonType>? types,
-      String? imageUrl});
+      String? imageUrl,
+      int? height,
+      int? weight});
 }
 
 /// @nodoc
@@ -84,6 +92,8 @@ class _$PokemonCopyWithImpl<$Res> implements $PokemonCopyWith<$Res> {
     Object? id = freezed,
     Object? types = freezed,
     Object? imageUrl = freezed,
+    Object? height = freezed,
+    Object? weight = freezed,
   }) {
     return _then(_value.copyWith(
       name: name == freezed
@@ -106,6 +116,14 @@ class _$PokemonCopyWithImpl<$Res> implements $PokemonCopyWith<$Res> {
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
               as String?,
+      height: height == freezed
+          ? _value.height
+          : height // ignore: cast_nullable_to_non_nullable
+              as int?,
+      weight: weight == freezed
+          ? _value.weight
+          : weight // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -120,7 +138,9 @@ abstract class _$PokemonCopyWith<$Res> implements $PokemonCopyWith<$Res> {
       String? url,
       int? id,
       List<PokemonType>? types,
-      String? imageUrl});
+      String? imageUrl,
+      int? height,
+      int? weight});
 }
 
 /// @nodoc
@@ -139,6 +159,8 @@ class __$PokemonCopyWithImpl<$Res> extends _$PokemonCopyWithImpl<$Res>
     Object? id = freezed,
     Object? types = freezed,
     Object? imageUrl = freezed,
+    Object? height = freezed,
+    Object? weight = freezed,
   }) {
     return _then(_Pokemon(
       name: name == freezed
@@ -161,6 +183,14 @@ class __$PokemonCopyWithImpl<$Res> extends _$PokemonCopyWithImpl<$Res>
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
               as String?,
+      height: height == freezed
+          ? _value.height
+          : height // ignore: cast_nullable_to_non_nullable
+              as int?,
+      weight: weight == freezed
+          ? _value.weight
+          : weight // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -168,7 +198,14 @@ class __$PokemonCopyWithImpl<$Res> extends _$PokemonCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_Pokemon implements _Pokemon {
-  _$_Pokemon({this.name, this.url, this.id, this.types, this.imageUrl});
+  _$_Pokemon(
+      {this.name,
+      this.url,
+      this.id,
+      this.types,
+      this.imageUrl,
+      this.height,
+      this.weight});
 
   factory _$_Pokemon.fromJson(Map<String, dynamic> json) =>
       _$$_PokemonFromJson(json);
@@ -183,10 +220,14 @@ class _$_Pokemon implements _Pokemon {
   final List<PokemonType>? types;
   @override
   final String? imageUrl;
+  @override
+  final int? height;
+  @override
+  final int? weight;
 
   @override
   String toString() {
-    return 'Pokemon(name: $name, url: $url, id: $id, types: $types, imageUrl: $imageUrl)';
+    return 'Pokemon(name: $name, url: $url, id: $id, types: $types, imageUrl: $imageUrl, height: $height, weight: $weight)';
   }
 
   @override
@@ -198,7 +239,9 @@ class _$_Pokemon implements _Pokemon {
             const DeepCollectionEquality().equals(other.url, url) &&
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.types, types) &&
-            const DeepCollectionEquality().equals(other.imageUrl, imageUrl));
+            const DeepCollectionEquality().equals(other.imageUrl, imageUrl) &&
+            const DeepCollectionEquality().equals(other.height, height) &&
+            const DeepCollectionEquality().equals(other.weight, weight));
   }
 
   @override
@@ -208,7 +251,9 @@ class _$_Pokemon implements _Pokemon {
       const DeepCollectionEquality().hash(url),
       const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(types),
-      const DeepCollectionEquality().hash(imageUrl));
+      const DeepCollectionEquality().hash(imageUrl),
+      const DeepCollectionEquality().hash(height),
+      const DeepCollectionEquality().hash(weight));
 
   @JsonKey(ignore: true)
   @override
@@ -227,7 +272,9 @@ abstract class _Pokemon implements Pokemon {
       String? url,
       int? id,
       List<PokemonType>? types,
-      String? imageUrl}) = _$_Pokemon;
+      String? imageUrl,
+      int? height,
+      int? weight}) = _$_Pokemon;
 
   factory _Pokemon.fromJson(Map<String, dynamic> json) = _$_Pokemon.fromJson;
 
@@ -241,6 +288,10 @@ abstract class _Pokemon implements Pokemon {
   List<PokemonType>? get types;
   @override
   String? get imageUrl;
+  @override
+  int? get height;
+  @override
+  int? get weight;
   @override
   @JsonKey(ignore: true)
   _$PokemonCopyWith<_Pokemon> get copyWith =>
@@ -411,4 +462,189 @@ abstract class _PokemonType implements PokemonType {
   @JsonKey(ignore: true)
   _$PokemonTypeCopyWith<_PokemonType> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+Stat _$StatFromJson(Map<String, dynamic> json) {
+  return _Stat.fromJson(json);
+}
+
+/// @nodoc
+class _$StatTearOff {
+  const _$StatTearOff();
+
+  _Stat call(
+      {int? effort, @JsonKey(name: 'base_stat') int? baseStat, String? name}) {
+    return _Stat(
+      effort: effort,
+      baseStat: baseStat,
+      name: name,
+    );
+  }
+
+  Stat fromJson(Map<String, Object?> json) {
+    return Stat.fromJson(json);
+  }
+}
+
+/// @nodoc
+const $Stat = _$StatTearOff();
+
+/// @nodoc
+mixin _$Stat {
+  int? get effort => throw _privateConstructorUsedError;
+  @JsonKey(name: 'base_stat')
+  int? get baseStat => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $StatCopyWith<Stat> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $StatCopyWith<$Res> {
+  factory $StatCopyWith(Stat value, $Res Function(Stat) then) =
+      _$StatCopyWithImpl<$Res>;
+  $Res call(
+      {int? effort, @JsonKey(name: 'base_stat') int? baseStat, String? name});
+}
+
+/// @nodoc
+class _$StatCopyWithImpl<$Res> implements $StatCopyWith<$Res> {
+  _$StatCopyWithImpl(this._value, this._then);
+
+  final Stat _value;
+  // ignore: unused_field
+  final $Res Function(Stat) _then;
+
+  @override
+  $Res call({
+    Object? effort = freezed,
+    Object? baseStat = freezed,
+    Object? name = freezed,
+  }) {
+    return _then(_value.copyWith(
+      effort: effort == freezed
+          ? _value.effort
+          : effort // ignore: cast_nullable_to_non_nullable
+              as int?,
+      baseStat: baseStat == freezed
+          ? _value.baseStat
+          : baseStat // ignore: cast_nullable_to_non_nullable
+              as int?,
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$StatCopyWith<$Res> implements $StatCopyWith<$Res> {
+  factory _$StatCopyWith(_Stat value, $Res Function(_Stat) then) =
+      __$StatCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {int? effort, @JsonKey(name: 'base_stat') int? baseStat, String? name});
+}
+
+/// @nodoc
+class __$StatCopyWithImpl<$Res> extends _$StatCopyWithImpl<$Res>
+    implements _$StatCopyWith<$Res> {
+  __$StatCopyWithImpl(_Stat _value, $Res Function(_Stat) _then)
+      : super(_value, (v) => _then(v as _Stat));
+
+  @override
+  _Stat get _value => super._value as _Stat;
+
+  @override
+  $Res call({
+    Object? effort = freezed,
+    Object? baseStat = freezed,
+    Object? name = freezed,
+  }) {
+    return _then(_Stat(
+      effort: effort == freezed
+          ? _value.effort
+          : effort // ignore: cast_nullable_to_non_nullable
+              as int?,
+      baseStat: baseStat == freezed
+          ? _value.baseStat
+          : baseStat // ignore: cast_nullable_to_non_nullable
+              as int?,
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_Stat implements _Stat {
+  _$_Stat({this.effort, @JsonKey(name: 'base_stat') this.baseStat, this.name});
+
+  factory _$_Stat.fromJson(Map<String, dynamic> json) => _$$_StatFromJson(json);
+
+  @override
+  final int? effort;
+  @override
+  @JsonKey(name: 'base_stat')
+  final int? baseStat;
+  @override
+  final String? name;
+
+  @override
+  String toString() {
+    return 'Stat(effort: $effort, baseStat: $baseStat, name: $name)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _Stat &&
+            const DeepCollectionEquality().equals(other.effort, effort) &&
+            const DeepCollectionEquality().equals(other.baseStat, baseStat) &&
+            const DeepCollectionEquality().equals(other.name, name));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(effort),
+      const DeepCollectionEquality().hash(baseStat),
+      const DeepCollectionEquality().hash(name));
+
+  @JsonKey(ignore: true)
+  @override
+  _$StatCopyWith<_Stat> get copyWith =>
+      __$StatCopyWithImpl<_Stat>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_StatToJson(this);
+  }
+}
+
+abstract class _Stat implements Stat {
+  factory _Stat(
+      {int? effort,
+      @JsonKey(name: 'base_stat') int? baseStat,
+      String? name}) = _$_Stat;
+
+  factory _Stat.fromJson(Map<String, dynamic> json) = _$_Stat.fromJson;
+
+  @override
+  int? get effort;
+  @override
+  @JsonKey(name: 'base_stat')
+  int? get baseStat;
+  @override
+  String? get name;
+  @override
+  @JsonKey(ignore: true)
+  _$StatCopyWith<_Stat> get copyWith => throw _privateConstructorUsedError;
 }

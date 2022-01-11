@@ -140,7 +140,13 @@ class _HomePageState extends State<HomePage> {
           mainAxisSpacing: 10,
           crossAxisSpacing: 10),
       itemBuilder: (context, count) {
-        return PokemonCard(pokemon: pokemons[count]);
+        return PokemonCard(
+          pokemon: pokemons[count],
+          onTap: () {
+            Navigator.pushNamed(context, '/details',
+                arguments: pokemons[count]);
+          },
+        );
       },
     );
   }

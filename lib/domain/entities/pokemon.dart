@@ -10,7 +10,9 @@ class Pokemon with _$Pokemon {
       String? url,
       int? id,
       List<PokemonType>? types,
-      String? imageUrl}) = _Pokemon;
+      String? imageUrl,
+      int? height,
+      int? weight}) = _Pokemon;
 
   factory Pokemon.fromJson(Map<String, dynamic> json) =>
       _$PokemonFromJson(json).copyWith(
@@ -24,4 +26,17 @@ class PokemonType with _$PokemonType {
 
   factory PokemonType.fromJson(Map<String, dynamic> json) =>
       _$PokemonTypeFromJson(json['type']);
+}
+
+@freezed
+class Stat with _$Stat {
+  factory Stat(
+      {int? effort,
+      @JsonKey(name: 'base_stat') int? baseStat,
+      String? name}) = _Stat;
+
+  factory Stat.fromJson(Map<String, dynamic> json) =>
+      _$StatFromJson(json).copyWith(
+        name: json['stat']['name'],
+      );
 }
