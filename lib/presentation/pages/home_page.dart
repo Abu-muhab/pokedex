@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -14,16 +15,17 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
   late ScrollController _scrollController;
   @override
   void initState() {
     super.initState();
     //load pokemons
     context.read<PokemonCubit>().loadPokemons();
-    _scrollController = ScrollController();
 
     //setup pagination scroll listener
+    _scrollController = ScrollController();
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
@@ -37,7 +39,7 @@ class _HomePageState extends State<HomePage> {
     });
 
     //fetch favorites
-    context.read<FavoritePokemonCubit>().loadFavorites();
+    context.read<FavoritePokemonCubit>().loadFavorites(invalidateCache: true);
   }
 
   @override
@@ -59,13 +61,7 @@ class _HomePageState extends State<HomePage> {
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    GestureDetector(
-                      onTap: () {
-                        context.read<PokemonCubit>().loadPokemons();
-                        context.read<FavoritePokemonCubit>().loadFavorites();
-                      },
-                      child: SvgPicture.asset('images/pokemon.svg'),
-                    ),
+                    SvgPicture.asset('images/pokemon.svg'),
                     const SizedBox(width: 20),
                     const Text(
                       'Pokedex',
@@ -149,7 +145,12 @@ class _HomePageState extends State<HomePage> {
                               Expanded(
                                   child: buildLoadedPokemons(
                                       pokemons: (state as dynamic).pokemons,
-                                      scrollController: _scrollController)),
+                                      scrollController: _scrollController,
+                                      onRefresh: () async {
+                                        await context
+                                            .read<PokemonCubit>()
+                                            .loadPokemons();
+                                      })),
                               if (state is PokemonLoadingMoreState)
                                 const Center(
                                   child: Padding(
@@ -160,7 +161,26 @@ class _HomePageState extends State<HomePage> {
                             ]);
                           }
 
-                          return Container();
+                          //error state
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                (state as PokemonErrorState).message,
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                              ElevatedButton(
+                                onPressed: () {
+                                  context.read<PokemonCubit>().loadPokemons();
+                                },
+                                child: const Text('Retry'),
+                              )
+                            ],
+                          );
                         },
                       ),
                     ),
@@ -173,7 +193,8 @@ class _HomePageState extends State<HomePage> {
                           FavoritePokemonState>(
                         listener: (context, state) {
                           if (state is FavoritePokemonLoadedState &&
-                              state.isCachedData == true) {
+                              state.isCachedData == true &&
+                              ModalRoute.of(context)!.isCurrent) {
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(const SnackBar(
                               content: Text('No internet connection'),
@@ -188,10 +209,22 @@ class _HomePageState extends State<HomePage> {
                               child: CircularProgressIndicator(),
                             );
                           } else if (state is FavoritePokemonLoadedState) {
+                            if (state.pokemon!.isEmpty) {
+                              return const Center(
+                                child: Text('No favorites'),
+                              );
+                            }
+
                             return Column(children: [
                               Expanded(
                                   child: buildLoadedPokemons(
-                                      pokemons: state.pokemon!)),
+                                pokemons: state.pokemon!,
+                                onRefresh: () async {
+                                  await context
+                                      .read<FavoritePokemonCubit>()
+                                      .loadFavorites(invalidateCache: true);
+                                },
+                              )),
                               if (state is PokemonLoadingMoreState)
                                 const Center(
                                   child: Padding(
@@ -215,24 +248,30 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget buildLoadedPokemons(
-      {required List<Pokemon> pokemons, ScrollController? scrollController}) {
-    return GridView.builder(
-      itemCount: pokemons.length,
-      controller: scrollController,
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          childAspectRatio: 0.6,
-          crossAxisCount: 3,
-          mainAxisSpacing: 10,
-          crossAxisSpacing: 10),
-      itemBuilder: (context, count) {
-        return PokemonCard(
-          pokemon: pokemons[count],
-          onTap: () {
-            Navigator.pushNamed(context, '/details',
-                arguments: pokemons[count]);
+      {required List<Pokemon> pokemons,
+      ScrollController? scrollController,
+      AsyncCallback? onRefresh}) {
+    return RefreshIndicator(
+        child: GridView.builder(
+          itemCount: pokemons.length,
+          controller: scrollController,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              childAspectRatio: 0.6,
+              crossAxisCount: 3,
+              mainAxisSpacing: 10,
+              crossAxisSpacing: 10),
+          itemBuilder: (context, count) {
+            return PokemonCard(
+              pokemon: pokemons[count],
+              onTap: () {
+                Navigator.pushNamed(context, '/details',
+                    arguments: pokemons[count]);
+              },
+            );
           },
-        );
-      },
-    );
+        ),
+        onRefresh: () async {
+          await onRefresh?.call();
+        });
   }
 }

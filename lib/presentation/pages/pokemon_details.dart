@@ -68,6 +68,7 @@ class _PokemonDetailsPageState extends State<PokemonDetailsPage> {
               builder: (context, state) {
         return SizedBox(
           height: 50,
+          width: 200,
           child: ElevatedButton(
             onPressed: () async {
               if (state is FavoritePokemonLoadingState) {

@@ -41,7 +41,7 @@ class PokemonRepositoryImpl extends PokemonRepository {
 
   @override
   Future<GetFavoritePokemonResponse> getFavoritePokemons(
-      {bool? invalidateCache}) async {
+      {bool? invalidateCache = false}) async {
     final response = await pokemonLocalDatasource.getFavoritePokemons();
     if (response.pokemons == null) {
       return GetFavoritePokemonResponse([], true);
