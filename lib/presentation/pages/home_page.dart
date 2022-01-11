@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pokedex/domain/entities/pokemon.dart';
+import 'package:pokedex/presentation/core/app_colors.dart';
+import 'package:pokedex/presentation/cubit/favorite_pokemon_cubit.dart';
 import 'package:pokedex/presentation/cubit/pokemon_cubit.dart';
 import 'package:pokedex/presentation/widgets/pokemon_card.dart';
 
@@ -33,6 +35,9 @@ class _HomePageState extends State<HomePage> {
         }
       }
     });
+
+    //fetch favorites
+    context.read<FavoritePokemonCubit>().loadFavorites();
   }
 
   @override
@@ -57,6 +62,7 @@ class _HomePageState extends State<HomePage> {
                     GestureDetector(
                       onTap: () {
                         context.read<PokemonCubit>().loadPokemons();
+                        context.read<FavoritePokemonCubit>().loadFavorites();
                       },
                       child: SvgPicture.asset('images/pokemon.svg'),
                     ),
@@ -70,8 +76,8 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ],
                 ),
-                const TabBar(tabs: [
-                  Tab(
+                TabBar(tabs: [
+                  const Tab(
                     child: Text(
                       'All Pokemons',
                       style: TextStyle(
@@ -82,60 +88,137 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   Tab(
-                    child: Text(
-                      'Favorite Pokemons',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black,
-                      ),
-                    ),
+                    child: BlocConsumer<FavoritePokemonCubit,
+                            FavoritePokemonState>(
+                        builder: (context, state) {
+                          return Row(
+                            children: [
+                              const Text(
+                                'Favorite Pokemons',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              if (state is FavoritePokemonLoadedState)
+                                const SizedBox(width: 10),
+                              if (state is FavoritePokemonLoadedState &&
+                                  state.pokemon!.isNotEmpty)
+                                Container(
+                                  width: 20,
+                                  height: 20,
+                                  decoration: BoxDecoration(
+                                    color: AppColors.lightBlue,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      state.pokemon!.length.toString(),
+                                      style: const TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                            ],
+                          );
+                        },
+                        listener: (context, state) {}),
                   ),
                 ]),
                 Expanded(
-                    child: Container(
-                  color: Colors.grey[100],
-                  child: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: BlocConsumer<PokemonCubit, PokemonState>(
-                      listener: (context, state) {},
-                      builder: (context, state) {
-                        if (state is PokemonLoadingState ||
-                            state is PokemonInitialState) {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        } else if (state is PokemonLoadedState ||
-                            state is PokemonLoadingMoreState) {
-                          return Column(children: [
-                            Expanded(
-                                child: buildLoadedPokemons(
-                                    (state as dynamic).pokemons)),
-                            if (state is PokemonLoadingMoreState)
-                              const Center(
-                                child: Padding(
-                                  padding: EdgeInsets.all(10),
-                                  child: CircularProgressIndicator(),
+                    child: TabBarView(children: [
+                  Container(
+                    color: Colors.grey[100],
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: BlocConsumer<PokemonCubit, PokemonState>(
+                        listener: (context, state) {},
+                        builder: (context, state) {
+                          if (state is PokemonLoadingState ||
+                              state is PokemonInitialState) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          } else if (state is PokemonLoadedState ||
+                              state is PokemonLoadingMoreState) {
+                            return Column(children: [
+                              Expanded(
+                                  child: buildLoadedPokemons(
+                                      pokemons: (state as dynamic).pokemons,
+                                      scrollController: _scrollController)),
+                              if (state is PokemonLoadingMoreState)
+                                const Center(
+                                  child: Padding(
+                                    padding: EdgeInsets.all(10),
+                                    child: CircularProgressIndicator(),
+                                  ),
                                 ),
-                              ),
-                          ]);
-                        }
+                            ]);
+                          }
 
-                        return Container();
-                      },
+                          return Container();
+                        },
+                      ),
                     ),
                   ),
-                ))
+                  Container(
+                    color: Colors.grey[100],
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: BlocConsumer<FavoritePokemonCubit,
+                          FavoritePokemonState>(
+                        listener: (context, state) {
+                          if (state is FavoritePokemonLoadedState &&
+                              state.isCachedData == true) {
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                              content: Text('No internet connection'),
+                              duration: Duration(seconds: 2),
+                            ));
+                          }
+                        },
+                        builder: (context, state) {
+                          if (state is FavoritePokemonLoadingState ||
+                              state is FavoritePokemonInitialState) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          } else if (state is FavoritePokemonLoadedState) {
+                            return Column(children: [
+                              Expanded(
+                                  child: buildLoadedPokemons(
+                                      pokemons: state.pokemon!)),
+                              if (state is PokemonLoadingMoreState)
+                                const Center(
+                                  child: Padding(
+                                    padding: EdgeInsets.all(10),
+                                    child: CircularProgressIndicator(),
+                                  ),
+                                ),
+                            ]);
+                          }
+
+                          return Container();
+                        },
+                      ),
+                    ),
+                  )
+                ]))
               ],
             ),
           )),
         ));
   }
 
-  Widget buildLoadedPokemons(List<Pokemon> pokemons) {
+  Widget buildLoadedPokemons(
+      {required List<Pokemon> pokemons, ScrollController? scrollController}) {
     return GridView.builder(
       itemCount: pokemons.length,
-      controller: _scrollController,
+      controller: scrollController,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           childAspectRatio: 0.6,
           crossAxisCount: 3,

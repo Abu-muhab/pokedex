@@ -29,7 +29,8 @@ class PokemonRemoteDataSourceImpl implements PokemonRemoteDataSource {
   }
 
   @override
-  Future<GetFavoritePokemonResponse> getFavoritePokemons() {
+  Future<GetFavoritePokemonResponse> getFavoritePokemons(
+      {bool? invalidateCache}) {
     throw UnimplementedError();
   }
 

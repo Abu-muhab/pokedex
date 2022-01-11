@@ -23,13 +23,15 @@ class _PokemonDetailsPageState extends State<PokemonDetailsPage> {
   Color? dominantColor;
   double titleOpacity = 0;
   bool? isFavorite;
-  FavoritePokemonCubit cubit = sl<FavoritePokemonCubit>();
+  FavoritePokemonCubit? cubit;
 
   final ScrollController _scrollController = ScrollController();
   @override
   void initState() {
     super.initState();
     _pokemon = widget.pokemon;
+
+    cubit = context.read<FavoritePokemonCubit>();
 
     //scroll lister to change the opacity of sliverappbar title upon expansion
     _scrollController.addListener(() {
@@ -54,7 +56,7 @@ class _PokemonDetailsPageState extends State<PokemonDetailsPage> {
   }
 
   Future<void> checkFavorite() async {
-    isFavorite = await cubit.isFavorite(_pokemon!);
+    isFavorite = await cubit!.isFavorite(_pokemon!);
     setState(() {});
   }
 
@@ -63,77 +65,74 @@ class _PokemonDetailsPageState extends State<PokemonDetailsPage> {
     return Scaffold(
       floatingActionButton:
           BlocConsumer<FavoritePokemonCubit, FavoritePokemonState>(
-              bloc: cubit,
               builder: (context, state) {
-                return SizedBox(
-                  height: 50,
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      if (state is FavoritePokemonLoadingState) {
-                        return;
-                      }
+        return SizedBox(
+          height: 50,
+          child: ElevatedButton(
+            onPressed: () async {
+              if (state is FavoritePokemonLoadingState) {
+                return;
+              }
 
-                      try {
-                        if (isFavorite == false) {
-                          await cubit.addToFavorites(_pokemon!);
-                        } else if (isFavorite == true) {
-                          await cubit.removeFromFavorites(_pokemon!);
-                        }
-                        // ignore: empty_catches
-                      } catch (err) {}
-                    },
-                    style: ElevatedButton.styleFrom(
-                        textStyle: const TextStyle(color: Colors.white),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        primary: isFavorite == true
-                            ? AppColors.lightBlueAccent
-                            : AppColors.lightBlue),
-                    child: state is FavoritePokemonLoadingState ||
-                            isFavorite == null
-                        ? const Center(
-                            child: SizedBox(
-                            height: 25,
-                            width: 25,
-                            child: CircularProgressIndicator(),
-                          ))
-                        : Padding(
-                            child: Text(
-                              isFavorite == true
-                                  ? 'Remove from favorites'
-                                  : 'Add to favorites',
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w700,
-                                  color: isFavorite == true
-                                      ? AppColors.lightBlue
-                                      : Colors.white),
-                            ),
-                            padding: const EdgeInsets.only(
-                                left: 10, right: 10, top: 15, bottom: 15),
-                          ),
+              try {
+                if (isFavorite == false) {
+                  await cubit!.addToFavorites(_pokemon!);
+                } else if (isFavorite == true) {
+                  await cubit!.removeFromFavorites(_pokemon!);
+                }
+                // ignore: empty_catches
+              } catch (err) {}
+            },
+            style: ElevatedButton.styleFrom(
+                textStyle: const TextStyle(color: Colors.white),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                primary: isFavorite == true
+                    ? AppColors.lightBlueAccent
+                    : AppColors.lightBlue),
+            child: state is FavoritePokemonLoadingState || isFavorite == null
+                ? const Center(
+                    child: SizedBox(
+                    height: 25,
+                    width: 25,
+                    child: CircularProgressIndicator(),
+                  ))
+                : Padding(
+                    child: Text(
+                      isFavorite == true
+                          ? 'Remove from favorites'
+                          : 'Add to favorites',
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
+                          color: isFavorite == true
+                              ? AppColors.lightBlue
+                              : Colors.white),
+                    ),
+                    padding: const EdgeInsets.only(
+                        left: 10, right: 10, top: 15, bottom: 15),
                   ),
-                );
-              },
-              listener: (context, state) async {
-                if (state is FavoritePokemonLoadedState) {
-                  await checkFavorite();
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text(isFavorite == true
-                        ? 'Added to favorites'
-                        : 'Removed from favorites'),
-                    duration: const Duration(seconds: 2),
-                  ));
-                }
+          ),
+        );
+      }, listener: (context, state) async {
+        if (state is FavoritePokemonLoadedState) {
+          await checkFavorite();
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(isFavorite == true
+                ? 'Added to favorites'
+                : 'Removed from favorites'),
+            duration: const Duration(seconds: 2),
+          ));
+        }
 
-                if (state is FavoritePokemonErrorState) {
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text(state.message),
-                    duration: const Duration(seconds: 2),
-                  ));
-                }
-              }),
+        if (state is FavoritePokemonErrorState) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(state.message),
+            duration: const Duration(seconds: 2),
+          ));
+        }
+      }),
       body: NestedScrollView(
         controller: _scrollController,
         headerSliverBuilder: (context, innerBoxScrolled) {

@@ -58,14 +58,17 @@ class PokemonLocalDatasourceImpl extends PokemonLocalDatasource {
   }
 
   @override
-  Future<GetFavoritePokemonResponse> getFavoritePokemons() async {
+  Future<GetFavoritePokemonResponse> getFavoritePokemons(
+      {bool? invalidateCache}) async {
     final favoritesJson = sharedPreferences.getString('favourites');
     if (favoritesJson == null) {
       return GetFavoritePokemonResponse([], true);
     }
     final json = jsonDecode(favoritesJson);
-    final List<Pokemon> pokemons =
-        json.map((pokemon) => Pokemon.fromJson(pokemon)).toList();
+    final List<Pokemon> pokemons = [];
+    for (var pokemon in json) {
+      pokemons.add(Pokemon.fromJson(pokemon));
+    }
     return GetFavoritePokemonResponse(pokemons, true);
   }
 

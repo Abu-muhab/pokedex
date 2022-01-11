@@ -11,12 +11,14 @@ class FavoritePokemonCubit extends Cubit<FavoritePokemonState> {
   FavoritePokemonCubit({required this.pokemonRepository})
       : super(const FavoritePokemonState.initial());
 
-  Future<void> loadFavorites() async {
+  Future<void> loadFavorites({bool? invalidateCache = false}) async {
     if (state is! FavoritePokemonLoadedState) {
       emit(const FavoritePokemonState.loading());
     }
+
     try {
-      final response = await pokemonRepository.getFavoritePokemons();
+      final response = await pokemonRepository.getFavoritePokemons(
+          invalidateCache: invalidateCache);
       emit(FavoritePokemonState.loaded(
           pokemon: response.pokemons!, isCachedData: response.isCached!));
     } catch (e) {
@@ -28,7 +30,7 @@ class FavoritePokemonCubit extends Cubit<FavoritePokemonState> {
     emit(const FavoritePokemonState.loading());
     try {
       await pokemonRepository.addFavoritePokemon(pokemon);
-      emit(const FavoritePokemonState.loaded());
+      loadFavorites();
     } catch (e) {
       emit(FavoritePokemonState.error(e.toString()));
     }
@@ -38,7 +40,7 @@ class FavoritePokemonCubit extends Cubit<FavoritePokemonState> {
     emit(const FavoritePokemonState.loading());
     try {
       await pokemonRepository.removeFavoritePokemon(pokemon);
-      emit(const FavoritePokemonState.loaded());
+      loadFavorites();
     } catch (e) {
       emit(FavoritePokemonState.error(e.toString()));
     }

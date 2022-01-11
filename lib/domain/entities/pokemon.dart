@@ -59,6 +59,6 @@ class Stat with _$Stat {
 
   factory Stat.fromJson(Map<String, dynamic> json) =>
       _$StatFromJson(json).copyWith(
-        name: json['stat']['name'] ?? json['name'],
+        name: json['stat']?['name'] ?? json['name'],
       );
 }
