@@ -11,17 +11,19 @@ class PokemonCubit extends Cubit<PokemonState> {
   PokemonCubit({required this.pokemonRepository})
       : super(const PokemonState.initial());
 
-  Future<void> loadPokemons() async {
-    print("loading pokemons");
-    emit(const PokemonState.loading());
-    final pokemon = await pokemonRepository.getPokemons();
-    emit(PokemonState.loaded(pokemon));
-    // try {
-    //   final pokemon = await pokemonRepository.getPokemons();
-    //   emit(PokemonState.loaded(pokemon));
-    // } catch (e) {
-    //   print(e);
-    //   emit(PokemonState.error(e.toString()));
-    // }
+  Future<void> loadPokemons({List<Pokemon>? loadedPokemons}) async {
+    if (loadedPokemons == null) {
+      emit(const PokemonState.loading());
+    } else {
+      emit(PokemonState.loadingMore(loadedPokemons));
+    }
+
+    try {
+      final pokemons = await pokemonRepository.getPokemons(
+          offset: loadedPokemons?.length ?? 0);
+      emit(PokemonState.loaded([...?loadedPokemons, ...pokemons]));
+    } catch (e) {
+      emit(PokemonState.error(e.toString()));
+    }
   }
 }

@@ -16,7 +16,7 @@ class PokemonRemoteDataSourceImpl implements PokemonRemoteDataSource {
   }
 
   @override
-  Future<List<Pokemon>> getPokemons({int offset = 0, int limit = 20}) async {
+  Future<List<Pokemon>> getPokemons({int offset = 0, int limit = 15}) async {
     final response =
         await _pokemonRestClient.getPokemons(offset: offset, limit: limit);
     List<Future<Pokemon>> pokemonsFutures = response.results

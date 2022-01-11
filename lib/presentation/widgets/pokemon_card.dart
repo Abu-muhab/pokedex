@@ -27,13 +27,17 @@ class _PokemonCardState extends State<PokemonCard> {
   @override
   void initState() {
     super.initState();
-    computeDominatImageColor();
+    WidgetsBinding.instance?.addPostFrameCallback((_) async {
+      await computeDominatImageColor();
+      setState(() {});
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
-      return Container(
+      return AnimatedContainer(
+          duration: const Duration(milliseconds: 300),
           width: constraints.maxWidth,
           height: constraints.maxHeight,
           color: Colors.white,
@@ -80,6 +84,8 @@ class _PokemonCardState extends State<PokemonCard> {
                   Text(
                       widget.pokemon?.types?.map((e) => e.name).join(', ') ??
                           '',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                           color: AppColors.grey,
                           fontWeight: FontWeight.w400,

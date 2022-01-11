@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:pokedex/domain/entities/pokemon.dart';
 import 'package:pokedex/presentation/cubit/pokemon_cubit.dart';
 import 'package:pokedex/presentation/widgets/pokemon_card.dart';
-import 'package:bloc/bloc.dart';
-
-import '../../injection_container.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -15,10 +13,26 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late ScrollController _scrollController;
   @override
   void initState() {
     super.initState();
+    //load pokemons
     context.read<PokemonCubit>().loadPokemons();
+    _scrollController = ScrollController();
+
+    //setup pagination scroll listener
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
+        final currentState = context.read<PokemonCubit>().state;
+        if (currentState is Loaded) {
+          context
+              .read<PokemonCubit>()
+              .loadPokemons(loadedPokemons: currentState.pokemons);
+        }
+      }
+    });
   }
 
   @override
@@ -33,7 +47,7 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Row(
@@ -46,8 +60,8 @@ class _HomePageState extends State<HomePage> {
                       },
                       child: SvgPicture.asset('images/pokemon.svg'),
                     ),
-                    SizedBox(width: 20),
-                    Text(
+                    const SizedBox(width: 20),
+                    const Text(
                       'Pokedex',
                       style: TextStyle(
                         fontSize: 30,
@@ -56,7 +70,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ],
                 ),
-                TabBar(tabs: [
+                const TabBar(tabs: [
                   Tab(
                     child: Text(
                       'All Pokemons',
@@ -82,32 +96,31 @@ class _HomePageState extends State<HomePage> {
                     child: Container(
                   color: Colors.grey[100],
                   child: Padding(
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     child: BlocConsumer<PokemonCubit, PokemonState>(
-                      listener: (context, state) {
-                        print(state);
-                      },
+                      listener: (context, state) {},
                       builder: (context, state) {
                         if (state is Loading) {
-                          return Center(
+                          return const Center(
                             child: CircularProgressIndicator(),
                           );
-                        }
-
-                        if (state is Loaded) {
-                          return GridView.builder(
-                            itemCount: state.pokemons.length,
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                                    childAspectRatio: 0.6,
-                                    crossAxisCount: 3,
-                                    mainAxisSpacing: 10,
-                                    crossAxisSpacing: 10),
-                            itemBuilder: (context, count) {
-                              return PokemonCard(
-                                  pokemon: state.pokemons[count]);
-                            },
-                          );
+                        } else if (state is Loaded) {
+                          return buildLoadedPokemons(state.pokemons);
+                        } else if (state is LoadingMore) {
+                          return Column(children: [
+                            Expanded(
+                                child:
+                                    buildLoadedPokemons(state.loadedPokemons)),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            const Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                          ]);
                         }
 
                         return Container();
@@ -119,5 +132,20 @@ class _HomePageState extends State<HomePage> {
             ),
           )),
         ));
+  }
+
+  Widget buildLoadedPokemons(List<Pokemon> pokemons) {
+    return GridView.builder(
+      itemCount: pokemons.length,
+      controller: _scrollController,
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          childAspectRatio: 0.6,
+          crossAxisCount: 3,
+          mainAxisSpacing: 10,
+          crossAxisSpacing: 10),
+      itemBuilder: (context, count) {
+        return PokemonCard(pokemon: pokemons[count]);
+      },
+    );
   }
 }
