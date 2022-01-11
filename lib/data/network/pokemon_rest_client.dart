@@ -11,7 +11,7 @@ abstract class PokemonRestClient {
   factory PokemonRestClient(Dio dio, {String baseUrl}) = _PokemonRestClient;
   @GET("pokemon")
   Future<GetPokemonsResponse> getPokemons(
-      {@Query('offset') int offset = 0, @Query('limit') int limit = 20});
+      {@Query('offset') int offset = 0, @Query('limit') int limit = 15});
 
   @GET("pokemon/{nameOrId}")
   Future<Pokemon> getPokemon(@Path("nameOrId") dynamic nameOrId);

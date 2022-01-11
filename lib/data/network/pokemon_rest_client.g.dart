@@ -38,7 +38,7 @@ class _PokemonRestClient implements PokemonRestClient {
   String? baseUrl;
 
   @override
-  Future<GetPokemonsResponse> getPokemons({offset = 0, limit = 20}) async {
+  Future<GetPokemonsResponse> getPokemons({offset = 0, limit = 15}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'offset': offset,

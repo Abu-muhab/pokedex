@@ -100,26 +100,22 @@ class _HomePageState extends State<HomePage> {
                     child: BlocConsumer<PokemonCubit, PokemonState>(
                       listener: (context, state) {},
                       builder: (context, state) {
-                        if (state is Loading) {
+                        if (state is Loading || state is Initial) {
                           return const Center(
                             child: CircularProgressIndicator(),
                           );
-                        } else if (state is Loaded) {
-                          return buildLoadedPokemons(state.pokemons);
-                        } else if (state is LoadingMore) {
+                        } else if (state is Loaded || state is LoadingMore) {
                           return Column(children: [
                             Expanded(
-                                child:
-                                    buildLoadedPokemons(state.loadedPokemons)),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            const Center(
-                              child: CircularProgressIndicator(),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
+                                child: buildLoadedPokemons(
+                                    (state as dynamic).pokemons)),
+                            if (state is LoadingMore)
+                              const Center(
+                                child: Padding(
+                                  padding: EdgeInsets.all(10),
+                                  child: CircularProgressIndicator(),
+                                ),
+                              ),
                           ]);
                         }
 
