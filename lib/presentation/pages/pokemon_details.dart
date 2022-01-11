@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:pokedex/domain/entities/pokemon.dart';
 import 'package:pokedex/presentation/core/app_colors.dart';
 import 'package:pokedex/presentation/widgets/pokemon_attribute_card.dart';
+import 'package:pokedex/presentation/widgets/pokemon_stat.dart';
 
 import '../util.dart';
 
@@ -167,8 +168,7 @@ class _PokemonDetailsPageState extends State<PokemonDetailsPage> {
                 const SizedBox(width: 30),
                 PokemonAttributeCard(
                   title: 'BMI',
-                  value:
-                      '${_pokemon?.height ?? 0 / (pow(_pokemon?.weight ?? 0, 2))}',
+                  value: _pokemon?.getBMI().toStringAsPrecision(3) ?? '0',
                 ),
               ],
             ),
@@ -196,7 +196,34 @@ class _PokemonDetailsPageState extends State<PokemonDetailsPage> {
                       Divider(
                         thickness: 2,
                         color: Colors.grey[200],
-                      )
+                      ),
+                      Expanded(
+                          child: ListView(children: [
+                        ..._pokemon?.stats?.map((e) => Padding(
+                                  padding: const EdgeInsets.only(
+                                      bottom: 20, left: 20, right: 20),
+                                  child: Column(
+                                    children: [
+                                      PokemonStat(
+                                          title: e.name, value: e.baseStat),
+                                      const SizedBox(height: 10),
+                                    ],
+                                  ),
+                                )) ??
+                            const [],
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              bottom: 20, left: 20, right: 20),
+                          child: Column(
+                            children: [
+                              PokemonStat(
+                                  title: 'Avg. Power',
+                                  value: _pokemon?.averagePower().toInt()),
+                              const SizedBox(height: 10),
+                            ],
+                          ),
+                        )
+                      ]))
                     ],
                   )))
         ]),

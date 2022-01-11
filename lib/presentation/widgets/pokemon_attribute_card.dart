@@ -12,13 +12,13 @@ class PokemonAttributeCard extends StatelessWidget {
     return Column(children: [
       Text(
         title ?? '',
-        style: TextStyle(
+        style: const TextStyle(
             fontWeight: FontWeight.w500, color: AppColors.grey, fontSize: 12),
       ),
-      SizedBox(height: 10),
+      const SizedBox(height: 10),
       Text(
         value ?? '',
-        style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14),
+        style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 14),
       ),
     ]);
   }

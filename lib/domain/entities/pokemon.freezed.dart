@@ -28,7 +28,8 @@ class _$PokemonTearOff {
       List<PokemonType>? types,
       String? imageUrl,
       int? height,
-      int? weight}) {
+      int? weight,
+      List<Stat>? stats}) {
     return _Pokemon(
       name: name,
       url: url,
@@ -37,6 +38,7 @@ class _$PokemonTearOff {
       imageUrl: imageUrl,
       height: height,
       weight: weight,
+      stats: stats,
     );
   }
 
@@ -57,6 +59,7 @@ mixin _$Pokemon {
   String? get imageUrl => throw _privateConstructorUsedError;
   int? get height => throw _privateConstructorUsedError;
   int? get weight => throw _privateConstructorUsedError;
+  List<Stat>? get stats => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -74,7 +77,8 @@ abstract class $PokemonCopyWith<$Res> {
       List<PokemonType>? types,
       String? imageUrl,
       int? height,
-      int? weight});
+      int? weight,
+      List<Stat>? stats});
 }
 
 /// @nodoc
@@ -94,6 +98,7 @@ class _$PokemonCopyWithImpl<$Res> implements $PokemonCopyWith<$Res> {
     Object? imageUrl = freezed,
     Object? height = freezed,
     Object? weight = freezed,
+    Object? stats = freezed,
   }) {
     return _then(_value.copyWith(
       name: name == freezed
@@ -124,6 +129,10 @@ class _$PokemonCopyWithImpl<$Res> implements $PokemonCopyWith<$Res> {
           ? _value.weight
           : weight // ignore: cast_nullable_to_non_nullable
               as int?,
+      stats: stats == freezed
+          ? _value.stats
+          : stats // ignore: cast_nullable_to_non_nullable
+              as List<Stat>?,
     ));
   }
 }
@@ -140,7 +149,8 @@ abstract class _$PokemonCopyWith<$Res> implements $PokemonCopyWith<$Res> {
       List<PokemonType>? types,
       String? imageUrl,
       int? height,
-      int? weight});
+      int? weight,
+      List<Stat>? stats});
 }
 
 /// @nodoc
@@ -161,6 +171,7 @@ class __$PokemonCopyWithImpl<$Res> extends _$PokemonCopyWithImpl<$Res>
     Object? imageUrl = freezed,
     Object? height = freezed,
     Object? weight = freezed,
+    Object? stats = freezed,
   }) {
     return _then(_Pokemon(
       name: name == freezed
@@ -191,13 +202,17 @@ class __$PokemonCopyWithImpl<$Res> extends _$PokemonCopyWithImpl<$Res>
           ? _value.weight
           : weight // ignore: cast_nullable_to_non_nullable
               as int?,
+      stats: stats == freezed
+          ? _value.stats
+          : stats // ignore: cast_nullable_to_non_nullable
+              as List<Stat>?,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$_Pokemon implements _Pokemon {
+class _$_Pokemon extends _Pokemon {
   _$_Pokemon(
       {this.name,
       this.url,
@@ -205,7 +220,9 @@ class _$_Pokemon implements _Pokemon {
       this.types,
       this.imageUrl,
       this.height,
-      this.weight});
+      this.weight,
+      this.stats})
+      : super._();
 
   factory _$_Pokemon.fromJson(Map<String, dynamic> json) =>
       _$$_PokemonFromJson(json);
@@ -224,10 +241,12 @@ class _$_Pokemon implements _Pokemon {
   final int? height;
   @override
   final int? weight;
+  @override
+  final List<Stat>? stats;
 
   @override
   String toString() {
-    return 'Pokemon(name: $name, url: $url, id: $id, types: $types, imageUrl: $imageUrl, height: $height, weight: $weight)';
+    return 'Pokemon(name: $name, url: $url, id: $id, types: $types, imageUrl: $imageUrl, height: $height, weight: $weight, stats: $stats)';
   }
 
   @override
@@ -241,7 +260,8 @@ class _$_Pokemon implements _Pokemon {
             const DeepCollectionEquality().equals(other.types, types) &&
             const DeepCollectionEquality().equals(other.imageUrl, imageUrl) &&
             const DeepCollectionEquality().equals(other.height, height) &&
-            const DeepCollectionEquality().equals(other.weight, weight));
+            const DeepCollectionEquality().equals(other.weight, weight) &&
+            const DeepCollectionEquality().equals(other.stats, stats));
   }
 
   @override
@@ -253,7 +273,8 @@ class _$_Pokemon implements _Pokemon {
       const DeepCollectionEquality().hash(types),
       const DeepCollectionEquality().hash(imageUrl),
       const DeepCollectionEquality().hash(height),
-      const DeepCollectionEquality().hash(weight));
+      const DeepCollectionEquality().hash(weight),
+      const DeepCollectionEquality().hash(stats));
 
   @JsonKey(ignore: true)
   @override
@@ -266,7 +287,7 @@ class _$_Pokemon implements _Pokemon {
   }
 }
 
-abstract class _Pokemon implements Pokemon {
+abstract class _Pokemon extends Pokemon {
   factory _Pokemon(
       {String? name,
       String? url,
@@ -274,7 +295,9 @@ abstract class _Pokemon implements Pokemon {
       List<PokemonType>? types,
       String? imageUrl,
       int? height,
-      int? weight}) = _$_Pokemon;
+      int? weight,
+      List<Stat>? stats}) = _$_Pokemon;
+  _Pokemon._() : super._();
 
   factory _Pokemon.fromJson(Map<String, dynamic> json) = _$_Pokemon.fromJson;
 
@@ -292,6 +315,8 @@ abstract class _Pokemon implements Pokemon {
   int? get height;
   @override
   int? get weight;
+  @override
+  List<Stat>? get stats;
   @override
   @JsonKey(ignore: true)
   _$PokemonCopyWith<_Pokemon> get copyWith =>

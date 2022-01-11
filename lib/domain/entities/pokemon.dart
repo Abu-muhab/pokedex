@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'pokemon.freezed.dart';
@@ -5,6 +7,7 @@ part 'pokemon.g.dart';
 
 @freezed
 class Pokemon with _$Pokemon {
+  const Pokemon._();
   factory Pokemon(
       {String? name,
       String? url,
@@ -12,12 +15,30 @@ class Pokemon with _$Pokemon {
       List<PokemonType>? types,
       String? imageUrl,
       int? height,
-      int? weight}) = _Pokemon;
+      int? weight,
+      List<Stat>? stats}) = _Pokemon;
 
   factory Pokemon.fromJson(Map<String, dynamic> json) =>
       _$PokemonFromJson(json).copyWith(
           imageUrl: json['sprites']?['other']?['official-artwork']
               ?['front_default']);
+
+  double averagePower() {
+    double total = 0;
+    if (stats == null) {
+      return 0;
+    }
+
+    for (Stat stat in stats!) {
+      total += stat.baseStat!;
+    }
+
+    return total / stats!.length;
+  }
+
+  double getBMI() {
+    return (height ?? 0) / (pow(weight ?? 0, 2));
+  }
 }
 
 @freezed
