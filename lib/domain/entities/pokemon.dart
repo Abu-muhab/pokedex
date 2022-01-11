@@ -23,5 +23,5 @@ class PokemonType with _$PokemonType {
   factory PokemonType({String? name, String? url}) = _PokemonType;
 
   factory PokemonType.fromJson(Map<String, dynamic> json) =>
-      _$PokemonTypeFromJson(json);
+      _$PokemonTypeFromJson(json['type']);
 }
