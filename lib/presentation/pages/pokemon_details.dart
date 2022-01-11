@@ -1,7 +1,10 @@
+import 'dart:math';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:pokedex/domain/entities/pokemon.dart';
 import 'package:pokedex/presentation/core/app_colors.dart';
+import 'package:pokedex/presentation/widgets/pokemon_attribute_card.dart';
 
 import '../util.dart';
 
@@ -24,6 +27,7 @@ class _PokemonDetailsPageState extends State<PokemonDetailsPage> {
     super.initState();
     _pokemon = widget.pokemon;
 
+    //scroll lister to change the opacity of sliverappbar title upon expansion
     _scrollController.addListener(() {
       final calculatedOpacity = (_scrollController.position.pixels >= 250
               ? 250
@@ -61,17 +65,16 @@ class _PokemonDetailsPageState extends State<PokemonDetailsPage> {
                   color: Colors.black,
                 ),
               ),
-              backgroundColor:
-                  dominantColor?.withOpacity(0.5) ?? Colors.grey[200]!,
+              backgroundColor: dominantColor ?? Colors.grey[200]!,
               flexibleSpace: FlexibleSpaceBar(
                 title: Opacity(
                   opacity: titleOpacity,
                   child: Text(
                     _pokemon?.name?.capitalizeFirstLetter() ?? '',
                     style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.darkBlue),
                   ),
                 ),
                 centerTitle: false,
@@ -146,7 +149,57 @@ class _PokemonDetailsPageState extends State<PokemonDetailsPage> {
             )
           ];
         },
-        body: Container(),
+        body: Column(children: [
+          Container(
+            padding: const EdgeInsets.all(20),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                PokemonAttributeCard(
+                  title: 'Height',
+                  value: _pokemon?.height?.toString() ?? '',
+                ),
+                const SizedBox(width: 30),
+                PokemonAttributeCard(
+                  title: 'Weight',
+                  value: _pokemon?.weight?.toString() ?? '',
+                ),
+                const SizedBox(width: 30),
+                PokemonAttributeCard(
+                  title: 'BMI',
+                  value:
+                      '${_pokemon?.height ?? 0 / (pow(_pokemon?.weight ?? 0, 2))}',
+                ),
+              ],
+            ),
+          ),
+          Container(
+            height: 10,
+            width: double.infinity,
+            color: Colors.grey[200],
+          ),
+          Expanded(
+              child: Container(
+                  width: double.infinity,
+                  color: Colors.white,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.all(20),
+                        child: Text('Base Stats',
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.darkBlue)),
+                      ),
+                      Divider(
+                        thickness: 2,
+                        color: Colors.grey[200],
+                      )
+                    ],
+                  )))
+        ]),
       ),
     );
   }
