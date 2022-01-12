@@ -44,3 +44,7 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+#generated flutter files
+*.g.dart
+*.freeze.dart

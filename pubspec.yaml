@@ -110,3 +110,8 @@ flutter_native_splash:
   color: "#3558CD"
   image: images/splash.png
   branding_mode: bottom
+
+analyzer:
+  exclude:
+    - '**.freezed.dart'
+    - '**.g.dart'
