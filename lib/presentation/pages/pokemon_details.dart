@@ -265,50 +265,46 @@ class _PokemonDetailsPageState extends State<PokemonDetailsPage> {
               child: Container(
                   width: double.infinity,
                   color: Colors.white,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.all(20),
-                        child: Text('Base Stats',
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: AppColors.darkBlue)),
+                  child: ListView(padding: EdgeInsets.zero, children: [
+                    const Padding(
+                      padding: EdgeInsets.all(20),
+                      child: Text('Base Stats',
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.darkBlue)),
+                    ),
+                    Divider(
+                      thickness: 2,
+                      color: Colors.grey[200],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    ..._pokemon?.stats?.map((e) => Padding(
+                              padding: const EdgeInsets.only(
+                                  bottom: 20, left: 20, right: 20),
+                              child: Column(
+                                children: [
+                                  PokemonStat(title: e.name, value: e.baseStat),
+                                  const SizedBox(height: 10),
+                                ],
+                              ),
+                            )) ??
+                        const [],
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          bottom: 20, left: 20, right: 20),
+                      child: Column(
+                        children: [
+                          PokemonStat(
+                              title: 'Avg. Power',
+                              value: _pokemon?.averagePower().toInt()),
+                          const SizedBox(height: 10),
+                        ],
                       ),
-                      Divider(
-                        thickness: 2,
-                        color: Colors.grey[200],
-                      ),
-                      Expanded(
-                          child: ListView(children: [
-                        ..._pokemon?.stats?.map((e) => Padding(
-                                  padding: const EdgeInsets.only(
-                                      bottom: 20, left: 20, right: 20),
-                                  child: Column(
-                                    children: [
-                                      PokemonStat(
-                                          title: e.name, value: e.baseStat),
-                                      const SizedBox(height: 10),
-                                    ],
-                                  ),
-                                )) ??
-                            const [],
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              bottom: 20, left: 20, right: 20),
-                          child: Column(
-                            children: [
-                              PokemonStat(
-                                  title: 'Avg. Power',
-                                  value: _pokemon?.averagePower().toInt()),
-                              const SizedBox(height: 10),
-                            ],
-                          ),
-                        )
-                      ]))
-                    ],
-                  )))
+                    )
+                  ])))
         ]),
       ),
     );
