@@ -13,12 +13,27 @@ void main() {
   setUp(() {
     pokemonRepository = MockPokemonRepository();
     pokemonCubit = PokemonCubit(pokemonRepository: pokemonRepository);
+    when(pokemonRepository.getPokemons()).thenAnswer((_) => Future.value([]));
   });
   group('pokemonCubit', () {
-    test('should emit [Loading,Loaded] states when data is fetched succesfully',
+    test(
+        'loadPokemons should emit [PokemonLoadingState,PokemonErrorState] states when data is fetched succesfully',
         () async {
-      when(pokemonRepository.getPokemons()).thenAnswer((_) => Future.value([]));
+      when(pokemonRepository.getPokemons()).thenThrow(Exception());
 
+      final expectedStates = [
+        const PokemonLoadingState(),
+        const PokemonErrorState("Something went wrong")
+      ];
+
+      expectLater(pokemonCubit.stream, emitsInOrder(expectedStates));
+
+      pokemonCubit.loadPokemons();
+    });
+
+    test(
+        'loadPokemons should emit [PokemonLoadingState,PokemonLoadedState] states when data is fetched succesfully',
+        () async {
       final expectedStates = [
         const PokemonLoadingState(),
         const PokemonLoadedState([])
@@ -30,10 +45,8 @@ void main() {
     });
 
     test(
-        'should emit [LoadingMore,Loaded] states when more data is fetched succesfully',
+        'loadPokemons should emit [PokemonLoadingState,PokemonLoadedState] states when more data is fetched succesfully',
         () async {
-      when(pokemonRepository.getPokemons()).thenAnswer((_) => Future.value([]));
-
       final expectedStates = [
         const PokemonLoadingMoreState([]),
         const PokemonLoadedState([])

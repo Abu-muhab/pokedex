@@ -12,7 +12,8 @@ class FavoritePokemonCubit extends Cubit<FavoritePokemonState> {
       : super(const FavoritePokemonState.initial());
 
   Future<void> loadFavorites({bool? invalidateCache = false}) async {
-    if (state is! FavoritePokemonLoadedState) {
+    if (state is! FavoritePokemonLoadedState &&
+        state is! FavoritePokemonLoadingState) {
       emit(const FavoritePokemonState.loading());
     }
 
