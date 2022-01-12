@@ -60,7 +60,6 @@ class PokemonRepositoryImpl extends PokemonRepository {
 
       //update the favorurites in local storage after successful fetch
       final remoteFavorites = await Future.wait(futures, eagerError: true);
-      print(remoteFavorites);
       for (var element in remoteFavorites) {
         updateFavoritePokemon(element);
       }
