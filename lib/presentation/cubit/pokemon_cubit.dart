@@ -23,7 +23,6 @@ class PokemonCubit extends Cubit<PokemonState> {
           offset: loadedPokemons?.length ?? 0);
       emit(PokemonState.loaded([...?loadedPokemons, ...pokemons]));
     } catch (e) {
-      print(e);
       emit(const PokemonState.error("Something went wrong"));
     }
   }
