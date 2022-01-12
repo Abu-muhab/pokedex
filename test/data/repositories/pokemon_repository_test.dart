@@ -24,7 +24,8 @@ void main() {
     );
   });
   group('pokemonRepository', () {
-    test('should return cached favorites when offline or remote source error',
+    test(
+        'getFavoritePokemons should return cached favorites when offline or remote source error',
         () async {
       when(mockRemoteDataSource.get(any)).thenThrow(Exception());
       when(mockRemoteDataSource.getFavoritePokemons()).thenThrow(Exception());
@@ -37,7 +38,8 @@ void main() {
       expect(response.isCached, isTrue);
     });
 
-    test('should return latest favorites remote data when network available',
+    test(
+        'getFavoritePokemons should return latest favorites remote data when network available',
         () async {
       when(mockRemoteDataSource.get(any))
           .thenAnswer((_) async => Pokemon(name: 'new_pokemon', id: 1));
