@@ -7,6 +7,7 @@ import 'package:pokedex/presentation/core/app_colors.dart';
 import 'package:pokedex/presentation/cubit/favorite_pokemon_cubit.dart';
 import 'package:pokedex/presentation/cubit/pokemon_cubit.dart';
 import 'package:pokedex/presentation/widgets/pokemon_card.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -251,27 +252,34 @@ class _HomePageState extends State<HomePage>
       {required List<Pokemon> pokemons,
       ScrollController? scrollController,
       AsyncCallback? onRefresh}) {
-    return RefreshIndicator(
-        child: GridView.builder(
-          itemCount: pokemons.length,
-          controller: scrollController,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              childAspectRatio: 0.6,
-              crossAxisCount: 3,
-              mainAxisSpacing: 10,
-              crossAxisSpacing: 10),
-          itemBuilder: (context, count) {
-            return PokemonCard(
-              pokemon: pokemons[count],
-              onTap: () {
-                Navigator.pushNamed(context, '/details',
-                    arguments: pokemons[count]);
-              },
-            );
-          },
-        ),
-        onRefresh: () async {
-          await onRefresh?.call();
-        });
+    return OrientationBuilder(builder: (context, orientation) {
+      return RefreshIndicator(
+          child: GridView.builder(
+            itemCount: pokemons.length,
+            controller: scrollController,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                childAspectRatio: 0.6,
+                crossAxisCount: getValueForScreenType<int>(
+                  context: context,
+                  mobile: orientation == Orientation.portrait ? 3 : 4,
+                  tablet: 5,
+                  desktop: 7,
+                ),
+                mainAxisSpacing: 10,
+                crossAxisSpacing: 10),
+            itemBuilder: (context, count) {
+              return PokemonCard(
+                pokemon: pokemons[count],
+                onTap: () {
+                  Navigator.pushNamed(context, '/details',
+                      arguments: pokemons[count]);
+                },
+              );
+            },
+          ),
+          onRefresh: () async {
+            await onRefresh?.call();
+          });
+    });
   }
 }

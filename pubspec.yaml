@@ -45,6 +45,7 @@ dependencies:
   cached_network_image: ^3.2.0
   palette_generator: ^0.3.2
   shared_preferences: ^2.0.12
+  responsive_builder: ^0.4.1
 
 dev_dependencies:
   flutter_test:
