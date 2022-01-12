@@ -1,8 +1,8 @@
 # Pokedex
 
 # Running instructions
-* run ```flutter pub run build_runner build```
-* Then build!
+* step 1  ```flutter pub run build_runner build```
+* step 2 ```flutter run```
 
 ## Packages
 *   [flutter_bloc](https://pub.dev/packages/flutter_bloc)
