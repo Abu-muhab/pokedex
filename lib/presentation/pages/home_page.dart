@@ -73,7 +73,7 @@ class _HomePageState extends State<HomePage>
                     ),
                   ],
                 ),
-                TabBar(tabs: [
+                TabBar(indicatorColor: AppColors.primaryColor, tabs: [
                   const Tab(
                     child: Text(
                       'All Pokemons',
