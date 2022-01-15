@@ -2,8 +2,9 @@
 A pokemon app that let's you explore a large libarary of pokemons, view their strenghts and save your favorite pokemons!. (Built using freezed and flutter_bloc)
 
 # Running instructions
-* step 1  ```flutter pub run build_runner build```
-* step 2 ```flutter run```
+* step 1 ```flutter pub get```
+* step 2  ```flutter pub run build_runner build```
+* step 3 ```flutter run```
 
 ## Packages
 *   [flutter_bloc](https://pub.dev/packages/flutter_bloc)
