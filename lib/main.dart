@@ -28,12 +28,12 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Pokedex',
+        title: 'Pokedex Demo',
         routes: {
           '/': (context) => const HomePage(),
           '/details': (context) => const PokemonDetailsPage()
         },
-        initialRoute: '/',
+        initialRoute: '/home',
       ),
     );
   }
